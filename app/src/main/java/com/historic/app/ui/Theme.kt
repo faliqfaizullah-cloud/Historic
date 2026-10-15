@@ -15,6 +15,7 @@ object HC {
     val WW1 = Color(0xFFFFB454)            // amber
     val WW2 = Color(0xFF58A6FF)            // steel blue
     val Malay = Color(0xFF3DDC97)          // emerald
+    val Cold = Color(0xFFB68CFF)           // violet
     val Allies = Color(0xFF4DA3FF)
     val Enemy = Color(0xFFFF6B6B)
 }
@@ -24,9 +25,13 @@ val Serif: FontFamily = FontFamily.Serif
 fun War.color(): Color = when (this) {
     War.WW1 -> HC.WW1
     War.WW2 -> HC.WW2
+    War.COLD -> HC.Cold
 }
 
-fun Side.color(): Color = if (this == Side.ALLIES) HC.Allies else HC.Enemy
+fun Side.color(): Color = when (this) {
+    Side.ALLIES, Side.WEST -> HC.Allies
+    else -> HC.Enemy
+}
 
 @Composable
 fun HistoricTheme(content: @Composable () -> Unit) {

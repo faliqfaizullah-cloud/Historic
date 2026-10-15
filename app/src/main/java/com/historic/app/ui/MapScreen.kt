@@ -100,10 +100,13 @@ fun MapScreen(state: MapState, onOpen: (String) -> Unit) {
                         GlassChip("World War II", war == War.WW2, HC.WW2) {
                             if (war != War.WW2) { haptics.boom(); state.openWar(War.WW2) }
                         }
+                        GlassChip("Cold War", war == War.COLD, HC.Cold) {
+                            if (war != War.COLD) { haptics.boom(); state.openWar(War.COLD) }
+                        }
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(14.dp), verticalAlignment = Alignment.CenterVertically) {
-                        LegendDot(HC.Allies, "Allies")
-                        LegendDot(HC.Enemy, if (war == War.WW1) "Central Powers" else "Axis")
+                        LegendDot(HC.Allies, war.friendly)
+                        LegendDot(HC.Enemy, war.rival)
                         LegendDot(HC.Malay, "Malay story")
                     }
                 }

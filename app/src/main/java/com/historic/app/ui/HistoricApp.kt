@@ -93,7 +93,11 @@ fun HistoricApp() {
                             when (current) {
                                 NavTab.HOME -> HomeScreen(
                                     onWar = { war ->
-                                        filter = if (war == War.WW1) TimelineFilter.WW1 else TimelineFilter.WW2
+                                        filter = when (war) {
+                                            War.WW1 -> TimelineFilter.WW1
+                                            War.WW2 -> TimelineFilter.WW2
+                                            War.COLD -> TimelineFilter.COLD
+                                        }
                                         tab = NavTab.TIMELINE
                                     },
                                     onMap = { tab = NavTab.MAP },

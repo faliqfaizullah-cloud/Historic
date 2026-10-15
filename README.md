@@ -6,7 +6,7 @@ and a dedicated Malay history section (Malaya and Borneo).
 - **UI:** true-black OLED background, glassmorphism cards (translucent gradient, rim light, press spring)
 - **Haptics:** card press, chip/tab/slider detents, marker thud, war-switch rumble; global on/off switch on Home
 - **Map:** pan, pinch-zoom, tap markers; faction shading follows the year slider
-- **Content:** 56 events (31 global, 25 Malay), works fully offline
+- **Content:** 89 events (WWI, WWII and Cold War, including Malay history), works fully offline
 
 ## Build the APK
 
@@ -26,4 +26,3 @@ Requirements: minSdk 26 (Android 8.0), compileSdk 34.
 - `data/MapGeo.kt` - coarse land outlines and faction zones
 - `ui/Haptics.kt` - haptic palette
 - `ui/Glass.kt` - glass components
-# Historic

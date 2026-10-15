@@ -87,6 +87,20 @@ object MapGeo {
     private val hungary = poly(13, 48.5, 18, 49.5, 24, 48.5, 26, 47, 23, 45, 19, 45, 16, 46, 13, 46.5)
     private val bulgaria = poly(22.5, 44, 28.5, 44, 28, 41.5, 23, 41.5)
 
+    // Cold War shapes
+    private val westGermany = poly(6, 53.5, 9, 55, 10.5, 54, 11, 51, 12, 50, 13, 48.5, 7.5, 47.6, 6, 50)
+    private val eastGermany = poly(10.5, 54, 14, 54.2, 14.5, 51, 12, 50, 11, 51)
+    private val easternEurope = poly(12, 50.3, 18.5, 50, 23, 49, 27, 48, 29, 45, 28, 43.5, 22.5, 44, 19, 46, 17, 47.7, 13.5, 48.5)
+    private val turkey = poly(26, 41, 41, 41, 44, 40, 42.5, 37, 36, 36, 30, 36.5, 27, 37.5)
+    private val greece = poly(20.5, 40.5, 26, 41.2, 26, 38, 23, 36.5, 21, 38)
+    private val china = poly(74, 39, 80, 45, 87, 49, 96, 43, 111, 43, 119, 47, 122, 53, 130, 48, 130, 42, 122, 40, 121, 37, 119, 35, 122, 30, 120, 25, 110, 21, 106, 22, 98, 24, 92, 28, 80, 30, 75, 35)
+    private val northKorea = poly(124.5, 40, 129.5, 42.5, 128.5, 38.5, 125, 38)
+    private val southKorea = poly(126, 38, 129, 38, 129.5, 35.5, 126.5, 34.5)
+    private val northVietnam = poly(102.2, 22.3, 106.5, 22.9, 108, 21.6, 106.4, 17.5, 104.5, 19, 102.5, 20.5)
+    private val southVietnam = poly(106.4, 17.5, 108.3, 16, 109.3, 12, 105.2, 8.7, 105, 11, 107, 14)
+    private val cuba = poly(-84.9, 21.9, -82.5, 23.1, -80, 23, -74.2, 20.2, -77.7, 19.9, -80.5, 21.5, -82.5, 22.0)
+    private val afghanistan = poly(61, 35.5, 65, 37.3, 70, 37.3, 74.5, 37, 71, 34, 70, 30, 66, 29.5, 62, 29.5)
+
     private fun z(war: War, from: Int, to: Int, side: Side, name: String, pts: List<LonLat>) =
         Zone(war, from, to, side, name, pts)
 
@@ -136,5 +150,31 @@ object MapGeo {
         z(War.WW2, 1942, 1944, Side.AXIS, "Philippines", philippines),
         z(War.WW2, 1942, 1944, Side.AXIS, "New Guinea (north)", newGuinea),
         z(War.WW2, 1942, 1944, Side.AXIS, "Pacific islands", pacificArc),
+
+        // ----- Cold War (Western bloc first, then the Soviet bloc on top) -----
+        z(War.COLD, 1947, 1991, Side.WEST, "United States", usa),
+        z(War.COLD, 1949, 1991, Side.WEST, "Canada", canada),
+        z(War.COLD, 1947, 1991, Side.WEST, "United Kingdom", britain),
+        z(War.COLD, 1949, 1991, Side.WEST, "France & Benelux", franceBenelux),
+        z(War.COLD, 1949, 1991, Side.WEST, "Italy", italy),
+        z(War.COLD, 1949, 1989, Side.WEST, "West Germany", westGermany),
+        z(War.COLD, 1990, 1991, Side.WEST, "Reunified Germany", germany),
+        z(War.COLD, 1952, 1991, Side.WEST, "Turkey", turkey),
+        z(War.COLD, 1952, 1991, Side.WEST, "Greece", greece),
+        z(War.COLD, 1947, 1991, Side.WEST, "Japan", japan),
+        z(War.COLD, 1948, 1991, Side.WEST, "South Korea", southKorea),
+        z(War.COLD, 1951, 1991, Side.WEST, "Australia", australia),
+        z(War.COLD, 1955, 1975, Side.WEST, "South Vietnam", southVietnam),
+        z(War.COLD, 1947, 1991, Side.EAST, "Soviet Union", russia),
+        z(War.COLD, 1947, 1991, Side.EAST, "Soviet Union (west)", westUssr),
+        z(War.COLD, 1947, 1989, Side.EAST, "Poland", poland),
+        z(War.COLD, 1947, 1989, Side.EAST, "Eastern Europe", easternEurope),
+        z(War.COLD, 1949, 1989, Side.EAST, "East Germany", eastGermany),
+        z(War.COLD, 1949, 1991, Side.EAST, "People's Republic of China", china),
+        z(War.COLD, 1948, 1991, Side.EAST, "North Korea", northKorea),
+        z(War.COLD, 1954, 1991, Side.EAST, "Vietnam (north)", northVietnam),
+        z(War.COLD, 1976, 1991, Side.EAST, "Vietnam (south)", southVietnam),
+        z(War.COLD, 1959, 1991, Side.EAST, "Cuba", cuba),
+        z(War.COLD, 1979, 1989, Side.EAST, "Soviet-occupied Afghanistan", afghanistan),
     )
 }

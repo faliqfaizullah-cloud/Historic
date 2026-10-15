@@ -1,14 +1,24 @@
 package com.historic.app.data
 
-enum class War(val label: String, val short: String, val start: Int, val end: Int) {
-    WW1("World War I", "WWI", 1914, 1918),
-    WW2("World War II", "WWII", 1939, 1945)
+enum class War(
+    val label: String,
+    val short: String,
+    val start: Int,
+    val end: Int,
+    val friendly: String,
+    val rival: String,
+) {
+    WW1("World War I", "WWI", 1914, 1918, "Allies", "Central Powers"),
+    WW2("World War II", "WWII", 1939, 1945, "Allies", "Axis"),
+    COLD("Cold War", "Cold War", 1947, 1991, "Western bloc", "Soviet bloc")
 }
 
 enum class Side(val label: String) {
     ALLIES("Allies"),
     CENTRAL("Central Powers"),
-    AXIS("Axis")
+    AXIS("Axis"),
+    WEST("Western bloc"),
+    EAST("Soviet bloc")
 }
 
 data class HistoricEvent(

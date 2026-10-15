@@ -28,7 +28,7 @@ import com.historic.app.data.HistoricEvent
 import com.historic.app.data.War
 
 enum class TimelineFilter(val label: String) {
-    ALL("All"), WW1("World War I"), WW2("World War II"), MALAYA("Malaya")
+    ALL("All"), WW1("World War I"), WW2("World War II"), COLD("Cold War"), MALAYA("Malaya")
 }
 
 @Composable
@@ -44,6 +44,7 @@ fun TimelineScreen(
                     TimelineFilter.ALL -> true
                     TimelineFilter.WW1 -> it.war == War.WW1
                     TimelineFilter.WW2 -> it.war == War.WW2
+                    TimelineFilter.COLD -> it.war == War.COLD
                     TimelineFilter.MALAYA -> it.malay
                 }
             }
@@ -64,6 +65,7 @@ fun TimelineScreen(
                 val accent = when (f) {
                     TimelineFilter.WW1 -> HC.WW1
                     TimelineFilter.WW2 -> HC.WW2
+                    TimelineFilter.COLD -> HC.Cold
                     TimelineFilter.MALAYA -> HC.Malay
                     TimelineFilter.ALL -> Color.White
                 }

@@ -61,7 +61,7 @@ fun HomeScreen(
                     color = HC.Ink,
                 )
                 Text(
-                    "Two world wars, mapped and told — with Malaya's own story woven in.",
+                    "Two world wars and the Cold War, mapped and told — with Malaya's own story woven in.",
                     fontSize = 15.sp,
                     lineHeight = 21.sp,
                     color = HC.Muted,
@@ -70,9 +70,30 @@ fun HomeScreen(
         }
 
         item {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                WarCard(War.WW1, "The Great War", Modifier.weight(1f)) { onWar(War.WW1) }
-                WarCard(War.WW2, "A world in flames", Modifier.weight(1f)) { onWar(War.WW2) }
+            Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                    WarCard(War.WW1, "The Great War", Modifier.weight(1f)) { onWar(War.WW1) }
+                    WarCard(War.WW2, "A world in flames", Modifier.weight(1f)) { onWar(War.WW2) }
+                }
+                GlassCard(Modifier.fillMaxWidth(), tint = HC.Cold, onClick = { onWar(War.COLD) }) {
+                    Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Caption("Cold War", color = HC.Cold)
+                        Text(
+                            "1947–1991",
+                            fontFamily = Serif,
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = HC.Ink,
+                        )
+                        Text("Two superpowers, one nuclear standoff", fontSize = 14.sp, color = HC.Ink.copy(alpha = 0.8f))
+                        Text(
+                            "${HistoricData.count(War.COLD)} events  →",
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = HC.Cold,
+                        )
+                    }
+                }
             }
         }
 
@@ -119,7 +140,7 @@ fun HomeScreen(
                         Pill("MALAY HISTORY", HC.Malay)
                     }
                     Text(
-                        "Malaya in two world wars",
+                        "Malaya and Malaysia at war",
                         fontFamily = Serif,
                         fontSize = 24.sp,
                         lineHeight = 29.sp,
@@ -127,7 +148,7 @@ fun HomeScreen(
                         color = HC.Ink,
                     )
                     Text(
-                        "From the Emden raid on Penang to the Fall of Singapore, the occupation, and the road to Merdeka.",
+                        "From the Emden raid on Penang to the Fall of Singapore, Merdeka, the Emergency and Konfrontasi.",
                         fontSize = 14.sp,
                         lineHeight = 20.sp,
                         color = HC.Ink.copy(alpha = 0.82f),
