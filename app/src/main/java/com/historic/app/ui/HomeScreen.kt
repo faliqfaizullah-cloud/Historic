@@ -38,6 +38,7 @@ fun HomeScreen(
     onWar: (War) -> Unit,
     onMap: () -> Unit,
     onMalay: () -> Unit,
+    onProfile: () -> Unit,
     onOpen: (String) -> Unit,
 ) {
     val haptics = LocalHaptics.current
@@ -159,6 +160,32 @@ fun HomeScreen(
                         color = HC.Malay,
                         fontWeight = FontWeight.SemiBold,
                     )
+                }
+            }
+        }
+
+        item {
+            GlassCard(Modifier.fillMaxWidth(), tint = HC.Malay, onClick = onProfile) {
+                Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Caption("Biography", color = HC.Malay)
+                        Pill("MALAYSIA", HC.Malay)
+                    }
+                    Text(
+                        "Tun Dr Mahathir Mohamad",
+                        fontFamily = Serif,
+                        fontSize = 24.sp,
+                        lineHeight = 29.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = HC.Ink,
+                    )
+                    Text(
+                        "His life, his contributions to Malaysia, the criticism, and the history he lived through.",
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                        color = HC.Ink.copy(alpha = 0.82f),
+                    )
+                    Text("Read his story  →", fontSize = 13.sp, color = HC.Malay, fontWeight = FontWeight.SemiBold)
                 }
             }
         }

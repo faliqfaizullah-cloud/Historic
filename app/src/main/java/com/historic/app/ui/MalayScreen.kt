@@ -18,7 +18,7 @@ import com.historic.app.data.HistoricData
 import com.historic.app.data.HistoricEvent
 
 @Composable
-fun MalayScreen(onOpen: (String) -> Unit, onShowOnMap: () -> Unit) {
+fun MalayScreen(onOpen: (String) -> Unit, onShowOnMap: () -> Unit, onProfile: () -> Unit) {
     val malayEvents = HistoricData.events.filter { it.malay }
 
     LazyColumn(
@@ -64,6 +64,15 @@ fun MalayScreen(onOpen: (String) -> Unit, onShowOnMap: () -> Unit) {
                 Column(Modifier.padding(horizontal = 20.dp, vertical = 14.dp)) {
                     Text("Open Malaya on the map", fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = HC.Ink)
                     Text("Zoom to the Malay Peninsula and Borneo", fontSize = 12.sp, color = HC.Muted)
+                }
+            }
+        }
+
+        item {
+            GlassCard(Modifier.fillMaxWidth(), tint = HC.WW1, onClick = onProfile) {
+                Column(Modifier.padding(horizontal = 20.dp, vertical = 14.dp)) {
+                    Text("Tun Dr Mahathir Mohamad", fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = HC.Ink)
+                    Text("Biography, contributions and legacy", fontSize = 12.sp, color = HC.Muted)
                 }
             }
         }

@@ -65,13 +65,15 @@ fun HistoricApp() {
         HistoricTheme {
             var tab by rememberSaveable { mutableStateOf(NavTab.HOME) }
             var detailId by rememberSaveable { mutableStateOf<String?>(null) }
+            var showProfile by rememberSaveable { mutableStateOf(false) }
             var filter by rememberSaveable { mutableStateOf(TimelineFilter.ALL) }
             val mapState = remember { MapState() }
 
             val detailEvent = detailId?.let { HistoricData.byId[it] }
 
-            BackHandler(enabled = detailEvent != null) { detailId = null }
-            BackHandler(enabled = detailEvent == null && tab != NavTab.HOME) { tab = NavTab.HOME }
+            BackHandler(enabled = showProfile) { showProfile = false }
+            BackHandler(enabled = detailEvent != null && !showProfile) { detailId = null }
+            BackHandler(enabled = detailEvent == null && !showProfile && tab != NavTab.HOME) { tab = NavTab.HOME }
 
             val (glowA, glowB) = when (tab) {
                 NavTab.HOME -> HC.WW1 to HC.WW2
@@ -102,12 +104,14 @@ fun HistoricApp() {
                                     },
                                     onMap = { tab = NavTab.MAP },
                                     onMalay = { tab = NavTab.MALAYA },
+                                    onProfile = { showProfile = true },
                                     onOpen = { detailId = it },
                                 )
                                 NavTab.MAP -> MapScreen(mapState, onOpen = { detailId = it })
                                 NavTab.TIMELINE -> TimelineScreen(filter, onFilter = { filter = it }, onOpen = { detailId = it })
                                 NavTab.MALAYA -> MalayScreen(
                                     onOpen = { detailId = it },
+                                    onProfile = { showProfile = true },
                                     onShowOnMap = {
                                         mapState.openWar(War.WW2)
                                         mapState.focusOn(Regions.seAsia)
@@ -118,6 +122,16 @@ fun HistoricApp() {
                         }
                     }
                     GlassNavBar(current = tab, onSelect = { tab = it })
+                }
+
+                AnimatedVisibility(
+                    visible = showProfile,
+                    enter = slideInVertically(tween(320)) { it / 3 } + fadeIn(tween(320)),
+                    exit = slideOutVertically(tween(240)) { it / 3 } + fadeOut(tween(240)),
+                ) {
+                    Box(Modifier.fillMaxSize().background(Color.Black).statusBarsPadding()) {
+                        ProfileScreen(onBack = { showProfile = false })
+                    }
                 }
 
                 AnimatedVisibility(
