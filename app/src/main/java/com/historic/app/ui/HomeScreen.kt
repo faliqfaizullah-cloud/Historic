@@ -39,6 +39,7 @@ fun HomeScreen(
     onMap: () -> Unit,
     onMalay: () -> Unit,
     onProfile: () -> Unit,
+    onFigures: () -> Unit,
     onOpen: (String) -> Unit,
 ) {
     val haptics = LocalHaptics.current
@@ -160,6 +161,29 @@ fun HomeScreen(
                         color = HC.Malay,
                         fontWeight = FontWeight.SemiBold,
                     )
+                }
+            }
+        }
+
+        item {
+            GlassCard(Modifier.fillMaxWidth(), tint = HC.Cold, onClick = onFigures) {
+                Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Caption("Faces of history", color = HC.Cold)
+                    Text(
+                        "Leaders who shaped the century",
+                        fontFamily = Serif,
+                        fontSize = 24.sp,
+                        lineHeight = 29.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = HC.Ink,
+                    )
+                    Text(
+                        "Churchill, Roosevelt, Stalin, Lenin, Bismarck, Hitler, Tunku and more, each with an illustration and the events they shaped.",
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                        color = HC.Ink.copy(alpha = 0.82f),
+                    )
+                    Text("${com.historic.app.data.FigureData.all.size} people  →", fontSize = 13.sp, color = HC.Cold, fontWeight = FontWeight.SemiBold)
                 }
             }
         }

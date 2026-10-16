@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
@@ -45,6 +46,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.historic.app.data.FigureData
 import com.historic.app.data.HistoricData
 import com.historic.app.data.War
 
@@ -52,6 +54,7 @@ enum class NavTab(val label: String, val icon: ImageVector) {
     HOME("Home", Icons.Filled.Home),
     MAP("Map", Icons.Filled.Place),
     TIMELINE("Timeline", Icons.Filled.DateRange),
+    FIGURES("Faces", Icons.Filled.Person),
     MALAYA("Malaya", Icons.Filled.Star),
 }
 
@@ -66,19 +69,23 @@ fun HistoricApp() {
             var tab by rememberSaveable { mutableStateOf(NavTab.HOME) }
             var detailId by rememberSaveable { mutableStateOf<String?>(null) }
             var showProfile by rememberSaveable { mutableStateOf(false) }
+            var figureId by rememberSaveable { mutableStateOf<String?>(null) }
             var filter by rememberSaveable { mutableStateOf(TimelineFilter.ALL) }
             val mapState = remember { MapState() }
 
             val detailEvent = detailId?.let { HistoricData.byId[it] }
+            val figure = figureId?.let { FigureData.byId[it] }
 
+            BackHandler(enabled = tab != NavTab.HOME) { tab = NavTab.HOME }
+            BackHandler(enabled = figure != null) { figureId = null }
             BackHandler(enabled = showProfile) { showProfile = false }
-            BackHandler(enabled = detailEvent != null && !showProfile) { detailId = null }
-            BackHandler(enabled = detailEvent == null && !showProfile && tab != NavTab.HOME) { tab = NavTab.HOME }
+            BackHandler(enabled = detailEvent != null) { detailId = null }
 
             val (glowA, glowB) = when (tab) {
                 NavTab.HOME -> HC.WW1 to HC.WW2
                 NavTab.MAP -> HC.WW2 to HC.WW1
                 NavTab.TIMELINE -> HC.WW1 to HC.Malay
+                NavTab.FIGURES -> HC.Cold to HC.WW1
                 NavTab.MALAYA -> HC.Malay to HC.WW1
             }
 
@@ -105,10 +112,12 @@ fun HistoricApp() {
                                     onMap = { tab = NavTab.MAP },
                                     onMalay = { tab = NavTab.MALAYA },
                                     onProfile = { showProfile = true },
+                                    onFigures = { tab = NavTab.FIGURES },
                                     onOpen = { detailId = it },
                                 )
                                 NavTab.MAP -> MapScreen(mapState, onOpen = { detailId = it })
                                 NavTab.TIMELINE -> TimelineScreen(filter, onFilter = { filter = it }, onOpen = { detailId = it })
+                                NavTab.FIGURES -> FiguresScreen(onOpen = { figureId = it })
                                 NavTab.MALAYA -> MalayScreen(
                                     onOpen = { detailId = it },
                                     onProfile = { showProfile = true },
@@ -122,6 +131,23 @@ fun HistoricApp() {
                         }
                     }
                     GlassNavBar(current = tab, onSelect = { tab = it })
+                }
+
+                AnimatedVisibility(
+                    visible = figure != null,
+                    enter = slideInVertically(tween(320)) { it / 3 } + fadeIn(tween(320)),
+                    exit = slideOutVertically(tween(240)) { it / 3 } + fadeOut(tween(240)),
+                ) {
+                    if (figure != null) {
+                        Box(Modifier.fillMaxSize().background(Color.Black).statusBarsPadding()) {
+                            FigureDetailScreen(
+                                figure = figure,
+                                onBack = { figureId = null },
+                                onOpenEvent = { detailId = it },
+                                onFullProfile = if (figure.id == "mahathir") ({ showProfile = true }) else null,
+                            )
+                        }
+                    }
                 }
 
                 AnimatedVisibility(
@@ -162,7 +188,7 @@ fun HistoricApp() {
 private fun GlassNavBar(current: NavTab, onSelect: (NavTab) -> Unit) {
     val haptics = LocalHaptics.current
     GlassCard(
-        Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = 16.dp, vertical = 8.dp),
+        Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = 10.dp, vertical = 8.dp),
         shape = RoundedCornerShape(30.dp),
         strength = 1.3f,
     ) {
@@ -172,6 +198,7 @@ private fun GlassNavBar(current: NavTab, onSelect: (NavTab) -> Unit) {
                 val accent = when (t) {
                     NavTab.MALAYA -> HC.Malay
                     NavTab.TIMELINE -> HC.WW1
+                    NavTab.FIGURES -> HC.Cold
                     else -> HC.WW2
                 }
                 val shape = RoundedCornerShape(24.dp)
@@ -185,7 +212,7 @@ private fun GlassNavBar(current: NavTab, onSelect: (NavTab) -> Unit) {
                                 onSelect(t)
                             }
                         }
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .padding(horizontal = 6.dp, vertical = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Icon(t.icon, contentDescription = t.label, tint = if (selected) accent else HC.Muted)

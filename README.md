@@ -6,7 +6,7 @@ and a dedicated Malay history section (Malaya and Borneo).
 - **UI:** true-black OLED background, glassmorphism cards (translucent gradient, rim light, press spring)
 - **Haptics:** card press, chip/tab/slider detents, marker thud, war-switch rumble; global on/off switch on Home
 - **Map:** pan, pinch-zoom, tap markers; faction shading follows the year slider
-- **Content:** 89 events (WWI, WWII and Cold War, including Malay history) and a biography of Tun Dr Mahathir Mohamad, works fully offline
+- **Content:** 89 events (WWI, WWII and Cold War, including Malay history), a biography of Tun Dr Mahathir Mohamad and 31 stylised portraits of historical figures (add real photos as fig_<id>.jpg in res/drawable), works fully offline
 
 ## Build the APK
 
